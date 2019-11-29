@@ -11,17 +11,23 @@ services:
 
    app-mysql:
      image: mysql:5.7.22
-     command: --innodb-use-native-aio=0
-     restart: always
+     container_name: app-mysql
+     restart: unless-stopped
+     tty: true
      ports:
        - "3306:3306"
      volumes:
-       - "./Devops/db-mysql/dbdata:/var/lib/mysql"
+       - ./Devops/mysql/dbdata:/var/lib/mysql
+       - ./Devops/mysql/my.cnf:/etc/mysql/my.cnf
      environment:
-       - MYSQL_DATABASE= app
-       - MYSQL_ROOT_PASSWORD= root
+       MYSQL_DATABASE: webtrack
+       MYSQL_ROOT_PASSWORD: webtrack
+       MYSQL_USER: webtrack
+       MYSQL_PASSWORD: webtrack
+       SERVICE_TAGS: dev
+       SERVICE_NAME: mysql
      networks:
-      - app-network
+       - app-network
 
    app-redis:
      image: redis:alpine
