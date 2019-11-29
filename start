@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$1" = '--build' ];
+then
+    docker-compose  up -d "$1"
+else
+    docker-compose  up
+fi
