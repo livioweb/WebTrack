@@ -1,0 +1,51 @@
+version: '3'
+
+services:
+   app:
+     build: ./Devops/php
+     container_name: app
+     volumes:
+       - ./src:/var/www/html
+     networks:
+       - app-network
+
+   app-mysql:
+     image: mysql:5.7.22
+     command: --innodb-use-native-aio=0
+     restart: always
+     ports:
+       - "3306:3306"
+     volumes:
+       - "./Devops/db-mysql/dbdata:/var/lib/mysql"
+     environment:
+       - MYSQL_DATABASE= app
+       - MYSQL_ROOT_PASSWORD= root
+     networks:
+      - app-network
+
+   app-redis:
+     image: redis:alpine
+     expose:
+       - 6379
+     networks:
+      - app-network
+
+   app-nginx:
+     build: ./Devops/nginx
+     restart: always
+     ports:
+       - "80:80"
+     volumes:
+       - "./src:/var/www/html"
+     networks:
+       - app-network
+     environment:
+       VIRTUAL_HOST: webtrack.local,botwebtrack.local
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  dbdata:
+    driver: local
