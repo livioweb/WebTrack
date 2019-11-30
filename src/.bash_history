@@ -24,3 +24,13 @@ php artisan horizon:install
 php artisan queue:failed-table
 php artisan migrate
 exit
+ls
+ls
+composer install
+composer install
+composer install
+composer update
+ls
+composer update
+php artisan migrate
+exit
