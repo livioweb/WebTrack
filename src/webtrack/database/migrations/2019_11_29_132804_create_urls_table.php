@@ -22,6 +22,7 @@ class CreateUrlsTable extends Migration
                 ->onDelete('cascade');
 
             $table->string('url','1024');
+            $table->text('detail');
             $table->boolean('is_crawled');
             $table->timestamps();
         });

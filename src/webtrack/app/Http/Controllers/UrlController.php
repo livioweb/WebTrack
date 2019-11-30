@@ -3,9 +3,19 @@
 namespace App\Http\Controllers;
 use App\Url;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UrlController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +23,7 @@ class UrlController extends Controller
      */
     public function index()
     {
-        $products = Url::latest()->paginate(5);
-
+        $urls = Url::latest()->paginate(5);
         return view('urls.index',compact('urls'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -38,13 +47,19 @@ class UrlController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'url' => 'required',
             'detail' => 'required',
         ]);
+        $url = new Url();
+        $url->user_id = Auth::id();
+        $url->url = $request->url;
+        $url->detail = $request->detail ;
+        $url->is_crawled = false;
+        $url->save();
 
-        Urls::create($request->all());
+        //Url::create($request->all());
 
-        return redirect()->route('urls.index')
+        return redirect()->route('url.index')
             ->with('success','urls created successfully.');
     }
 
@@ -68,7 +83,7 @@ class UrlController extends Controller
      */
     public function edit(Url $url)
     {
-        return view('urls.edit',compact('urls'));
+        return view('urls.edit',compact('url'));
 
     }
 
@@ -83,11 +98,15 @@ class UrlController extends Controller
     {
         $request->validate([
             'url' => 'required',
+            'detail' => 'required',
         ]);
+        //$url->user_id = Auth::id();
+        $url->url = $request->url;
+        $url->detail = $request->detail ;
+        $url->is_crawled = false;
+        $url->update();
 
-        $url->update($request->all());
-
-        return redirect()->route('urls.index')
+        return redirect()->route('url.index')
             ->with('success','Url updated successfully');
 
     }
@@ -102,7 +121,7 @@ class UrlController extends Controller
     {
         $url->delete();
 
-        return redirect()->route('urls.index')
+        return redirect()->route('url.index')
             ->with('success','Url deleted successfully');
     }
 }
