@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePagesTable extends Migration
+class CreateUrlsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,24 +13,16 @@ class CreatePagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pages', function (Blueprint $table) {
+        Schema::create('urls', function (Blueprint $table) {
             $table->bigIncrements('id');
 
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')
                 ->references('id')->on('users')
-               ->onDelete('cascade');
-
-            $table->bigInteger('url_id')->unsigned();
-            $table->foreign('url_id')
-                ->references('id')->on('urls')
                 ->onDelete('cascade');
 
             $table->string('url','1024');
-            $table->text('title')->nullable();
-            $table->unsignedInteger('status')->nullable();
             $table->boolean('is_crawled');
-
             $table->timestamps();
         });
     }
@@ -42,6 +34,6 @@ class CreatePagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pages');
+        Schema::dropIfExists('urls');
     }
 }
