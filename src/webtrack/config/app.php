@@ -177,7 +177,9 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         #Configs to WebTrack
+        App\Providers\GuzzleServiceProvider::class,
         Arcanedev\LogViewer\LogViewerServiceProvider::class
+
 
 
 
@@ -231,6 +233,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'HttpCrapping' => App\Providers\Facades\HttpCrapping::class,
 
     ],
 

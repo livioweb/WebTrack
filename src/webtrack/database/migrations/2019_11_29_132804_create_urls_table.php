@@ -23,7 +23,7 @@ class CreateUrlsTable extends Migration
 
             $table->string('url','1024');
             $table->text('detail');
-            $table->boolean('is_crawled');
+            $table->integer('is_crawled');
             $table->timestamps();
         });
     }

@@ -28,7 +28,7 @@ class CreatePagesTable extends Migration
 
             $table->string('url','1024');
             $table->text('title')->nullable();
-            $table->unsignedInteger('status')->nullable();
+            $table->integer('status')->nullable();
             $table->boolean('is_crawled');
 
             $table->timestamps();
