@@ -18,5 +18,20 @@ Horizon Dashboard
 http://webtrack.local/horizon
 ```
 
+Disparar os jobs, acesse esta rota
+ ```sh
+http://webtrack.local/q
+```
 
-Run Migrate
+Para instalar o banco
+ ```sh
+docker-compose exec app php artisan migrate
+```
+
+Para iniciar o woker
+ ```sh
+docker-compose exec app php artisan horizon
+```
+
+
+

@@ -7,6 +7,7 @@ use App\Url;
 use Arcanedev\LogViewer\Entities\Log;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Symfony\Component\DomCrawler\Crawler;
 use GuzzleHttp\Exception\ClientException;
 
@@ -67,7 +68,6 @@ class botWebTrack extends Command
                 $nUrl = Url::find($url->user_id);
                 $nUrl->is_crawled = $nUrl->is_crawled + 1;
                 $nUrl->update();
-
                 echo "ok";
             } catch (\Exception $e) {
                 Log::info("URL Crapping |Route:" . $url . " | " . var_dump($e->getMessage()), $e->getCode());

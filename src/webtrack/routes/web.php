@@ -19,4 +19,8 @@ Auth::routes(['verify' => true]);
 Route::resource('url','UrlController');
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get("/q", function(){
+    \App\Jobs\botWebTrack::dispatch();
+});
+
 
